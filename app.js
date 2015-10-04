@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var flash    = require('connect-flash');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -21,6 +23,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
+
+app.use(function(req, res, next){
+  res.locals.user = req.user;
+  res.locals.message;
+  next();
+});
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/frideDB');
+
+var db = mongoose.connection;
+
+db.on('error', function callback () {
+  console.log("Connection error");
+});
+
+db.once('open', function callback () {
+  console.log("Mongo working!");
+});
 
 app.use('/', routes);
 app.use('/users', users);
