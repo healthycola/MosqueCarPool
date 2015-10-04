@@ -32,7 +32,7 @@ app.use(function(req, res, next){
 });
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/frideDB');
+mongoose.connect('mongodb://ajawaid:superhp@ds029224.mongolab.com:29224/fridedb');
 
 var db = mongoose.connection;
 
